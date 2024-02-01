@@ -2,6 +2,7 @@
 
 namespace App\Controller\api\v1;
 
+use App\Repository\UserRepository;
 use App\Util\Interfaces\ApiCrudInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,18 +13,32 @@ class UserController extends AbstractController implements ApiCrudInterface
 {
     // DELETE | [domain]/api/v1/users/delete/[id]
     // GET    | [domain]/api/v1/users
+    // GET    | [domain]/api/v1/users/find-notes/[id]
+    // GET    | [domain]/api/v1/users/find-notes/[id]/old
     // GET    | [domain]/api/v1/users/find/[id]
     // POST   | [domain]/api/v1/users/create
     // PUT    | [domain]/api/v1/users/update
 
-    #[Route('/api/v1/users/find/{id}', name: 'find_user')]
+    private UserRepository $repository;
+
+
+    public function __construct(UserRepository $repository)
+    {
+        $repository->setAttributes([
+            'id',
+            'name',
+            'email',
+            'active',
+        ]);
+        $this->repository = $repository;
+    }
+
+    #[Route('/api/v1/users/find/{id}', name: 'find_user', requirements: ['id' => '\d+'])]
     public function find(int $id): JsonResponse
     {
         return new JsonResponse([
             'message' => 'From ' . go(),
-            'data' => [
-                'id' => $id, // TODO:
-            ],
+            'data' => $this->repository->find($id),
         ]);
     }
 
@@ -32,7 +47,25 @@ class UserController extends AbstractController implements ApiCrudInterface
     {
         return new JsonResponse([
             'message' => 'From ' . go(),
-            'data' => [], // TODO:
+            'data' => $this->repository->findAll(),
+        ]);
+    }
+
+    #[Route('/api/v1/users/find-notes/{id}', name: 'find_user_notes', requirements: ['id' => '\d+'])]
+    public function findNotes(int $id): JsonResponse
+    {
+        return new JsonResponse([
+            'message' => 'From ' . go(),
+            'data' => $this->repository->findUserNotes($id, true, 'id,text,user_id'),
+        ]);
+    }
+
+    #[Route('/api/v1/users/find-notes/{id}/old', name: 'find_old_user_notes', requirements: ['id' => '\d+'])]
+    public function findOldNotes(int $id): JsonResponse
+    {
+        return new JsonResponse([
+            'message' => 'From ' . go(),
+            'data' => $this->repository->findOldUserNotes($id, true, 'id,text,user_id'),
         ]);
     }
 
@@ -60,7 +93,7 @@ class UserController extends AbstractController implements ApiCrudInterface
         ]);
     }
 
-    #[Route('/api/v1/users/delete/{id}', name: 'delete_user')]
+    #[Route('/api/v1/users/delete/{id}', name: 'delete_user', requirements: ['id' => '\d+'])]
     public function delete(int $id): JsonResponse
     {
         return new JsonResponse([

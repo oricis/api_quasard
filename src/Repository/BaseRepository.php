@@ -10,11 +10,23 @@ use Doctrine\DBAL\DriverManager;
 class BaseRepository
 {
     protected Connection $connection;
-
+    protected string $attributes = '*';
 
     public function __construct()
     {
-        $connectionParams = [
+        $this->connection
+            = DriverManager::getConnection($this->getConnectionParams());
+    }
+
+    public function setAttributes(array $attributes): void
+    {
+        $this->attributes = implode(',', $attributes);
+    }
+
+
+    private function getConnectionParams(): array
+    {
+        return [
             'dbname' => $_ENV['DB_NAME'],
             'driver' => $_ENV['DB_DRIVER'],
             'host'   => $_ENV['DB_HOST'],
@@ -22,8 +34,5 @@ class BaseRepository
             'server_version' => $_ENV['DB_SERVER_VERSION'],
             'user'   => $_ENV['DB_USER'],
         ];
-
-        $this->connection
-            = DriverManager::getConnection($connectionParams);
     }
 }

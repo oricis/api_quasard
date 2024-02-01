@@ -65,6 +65,8 @@ The available API routes are:
 
     DELETE | [domain]/api/v1/users/delete/[id]
     GET    | [domain]/api/v1/users
+    GET    | [domain]/api/v1/users/find-notes/[id]
+    GET    | [domain]/api/v1/users/find-notes/[id]/old
     GET    | [domain]/api/v1/users/find/[id]
     POST   | [domain]/api/v1/users/create
     PUT    | [domain]/api/v1/users/update

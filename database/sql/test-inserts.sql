@@ -23,6 +23,7 @@ INSERT INTO `notes` (`id`, `text`, `user_id`, `created_at`, `updated_at`, `delet
 INSERT INTO `category_note` (`id`, `category_id`, `note_id`, `created_at`, `deleted_at`) VALUES
 (NULL, '1', '1', NOW(), NULL),
 (NULL, '1', '2', NOW(), NULL),
+(NULL, '2', '1', NOW(), NULL),
 (NULL, '3', '3', NOW(), NULL);
 
 -- --------------------------------------------------------
