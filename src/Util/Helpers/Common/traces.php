@@ -47,9 +47,7 @@ $funcName = 'getExceptionStr';
 if (!function_exists($funcName)) {
     function getExceptionStr(\Exception $exception): string
     {
-        $dateTime = date('d-m-Y - h:m:s');
-
-        return $dateTime . ' - ' . (APP_NAME ?? '')
+        return date('Y-m-d H:i:s')
             . '<br>File: ' . $exception->getFile() . PHP_EOL
             . ' / Line: ' . $exception->getLine() . PHP_EOL
             . '<br>Exception: ' . $exception->getMessage();

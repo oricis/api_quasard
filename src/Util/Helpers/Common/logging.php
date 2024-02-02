@@ -19,9 +19,10 @@ if (!function_exists($funcName)) {
             $level = 'WARNING';
         }
         $message = $level . ': ' . $message;
-        $dateTime = date('d-m-Y - h:m:s');
+        $dateTime = date('Y-m-d H:i:s');
         $today = date('d_m_Y');
-        $path = dirname(__DIR__, 3) . '/var/log/' . $today . '.md';
+        $path = dirname(__DIR__, 4) . '/var/log/' . $today . '.md';
+
         file_put_contents(
             $path,
             $dateTime . ' > ' . $message . PHP_EOL,
