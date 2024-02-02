@@ -40,32 +40,20 @@ class NoteController extends AbstractController implements ApiCrudInterface
         ]);
     }
 
-    #[Route('/api/v1/notes/find-notes/{id}', name: 'find_note_notes', requirements: ['id' => '\d+'])]
-    public function findNotes(int $id): JsonResponse
-    {
-        return new JsonResponse([
-            'message' => 'From ' . go(),
-            'data' => $this->repository->findNoteNotes($id, true, 'id,text,note_id'),
-        ]);
-    }
-
-    #[Route('/api/v1/notes/find-notes/{id}/old', name: 'find_old_note_notes', requirements: ['id' => '\d+'])]
-    public function findOldNotes(int $id): JsonResponse
-    {
-        return new JsonResponse([
-            'message' => 'From ' . go(),
-            'data' => $this->repository->findOldNoteNotes($id, true, 'id,text,note_id'),
-        ]);
-    }
-
     #[Route('/api/v1/notes/create', name: 'create_note')]
     public function create(Request $request): JsonResponse
     {
+        if ($request->getMethod() === 'POST') {
+            $result = $this->repository->create($request);
+            $message = ($result)
+                ? 'Note created!'
+                : 'Error creating note';
+        }
+
         return new JsonResponse([
-            'message' => 'From ' . go(),
+            'message' => $message ?? 404,
             'data' => [
-                'success' => false, // TODO:
-                'id' => 1,
+                'success' => (bool) ($result ?? false),
             ],
         ]);
     }
@@ -73,11 +61,53 @@ class NoteController extends AbstractController implements ApiCrudInterface
     #[Route('/api/v1/notes/update', name: 'update_note')]
     public function update(Request $request): JsonResponse
     {
+        if ($request->getMethod() === 'PUT') {
+            $result = $this->repository->update($request);
+            $message = ($result)
+                ? 'Note updated!'
+                : 'Error updating note';
+        }
+
         return new JsonResponse([
-            'message' => 'From ' . go(),
+            'message' => $message ?? 404,
             'data' => [
-                'success' => false, // TODO:
-                'id' => 1,
+                'success' => (bool) ($result ?? false),
+            ],
+        ]);
+    }
+
+    #[Route('/api/v1/notes/remove-category', name: 'remove_note_category')]
+    public function removeCategory(Request $request): JsonResponse
+    {
+        if ($request->getMethod() === 'PUT') {
+            $result = $this->repository->removeCategory($request);
+            $message = ($result)
+                ? 'Note updated!'
+                : 'Error updating note';
+        }
+
+        return new JsonResponse([
+            'message' => $message ?? 404,
+            'data' => [
+                'success' => (bool) ($result ?? false),
+            ],
+        ]);
+    }
+
+    #[Route('/api/v1/notes/set-category', name: 'set_note_category')]
+    public function setCategory(Request $request): JsonResponse
+    {
+        if ($request->getMethod() === 'PUT') {
+            $result = $this->repository->setCategory($request);
+            $message = ($result)
+                ? 'Note updated!'
+                : 'Error updating note';
+        }
+
+        return new JsonResponse([
+            'message' => $message ?? 404,
+            'data' => [
+                'success' => (bool) ($result ?? false),
             ],
         ]);
     }
@@ -85,10 +115,17 @@ class NoteController extends AbstractController implements ApiCrudInterface
     #[Route('/api/v1/notes/delete/{id}', name: 'delete_note', requirements: ['id' => '\d+'])]
     public function delete(int $id, Request $request): JsonResponse
     {
+        if ($request->getMethod() === 'DELETE') {
+            $result = $this->repository->delete($id);
+            $message = ($result)
+                ? 'Note deleted!'
+                : 'Error deleting note';
+        }
+
         return new JsonResponse([
-            'message' => 'From ' . go(),
+            'message' => $message ?? 404,
             'data' => [
-                'success' => false, // TODO:
+                'success' => (bool) ($result ?? false),
             ],
         ]);
     }
