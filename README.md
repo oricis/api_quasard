@@ -93,25 +93,30 @@ The available API routes are:
 ### App Directories
 
     src/
-      |
       |-- Controller/
       |     |-- api/
       |
       |-- Exceptions/
       |
-      |-- Util/
-      |     |-- Helpers/
-      |     |     |-- Common/
-      |     |
-      |     |-- Interfaces/
-      |
       |-- Repository/
+      |     |-- Data/
+      |     |-- Traits/
       |
-      |-- Services/
-            |-- Common/
+      |-- Service/
+      |     |-- Common/
+      |     |
+      |     |-- Repository/
+      |           |-- Category/
+      |           |-- CategoryNote/
+      |           |-- Common/
+      |           |-- Note/
+      |           |-- User/
+      |
+      |-- Util/
+            |-- Helpers/
+            |     |-- Common/
             |
-            |-- Repository/
-                  |-- Common/
+            |-- Interfaces/
 
 ***
 
