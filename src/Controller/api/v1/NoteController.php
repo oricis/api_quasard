@@ -83,7 +83,7 @@ class NoteController extends AbstractController implements ApiCrudInterface
     }
 
     #[Route('/api/v1/notes/delete/{id}', name: 'delete_note', requirements: ['id' => '\d+'])]
-    public function delete(int $id): JsonResponse
+    public function delete(int $id, Request $request): JsonResponse
     {
         return new JsonResponse([
             'message' => 'From ' . go(),

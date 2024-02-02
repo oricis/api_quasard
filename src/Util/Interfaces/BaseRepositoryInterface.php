@@ -10,7 +10,7 @@ interface BaseRepositoryInterface
 {
 
     public function create(Request $request): int;
-    public function delete(int $id, Request $request): bool;
+    public function delete(int $id): bool;
     public function find(int $id):? object;
     public function update(Request $request): int;
 }

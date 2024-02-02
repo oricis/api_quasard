@@ -55,7 +55,7 @@ final class UserRepository extends BaseRepository implements BaseRepositoryInter
         return 0;
     }
 
-    public function delete(int $id, Request $request): bool
+    public function delete(int $id): bool
     {
         return false;
     }

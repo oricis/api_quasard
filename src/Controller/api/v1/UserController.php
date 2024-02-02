@@ -94,7 +94,7 @@ class UserController extends AbstractController implements ApiCrudInterface
     }
 
     #[Route('/api/v1/users/delete/{id}', name: 'delete_user', requirements: ['id' => '\d+'])]
-    public function delete(int $id): JsonResponse
+    public function delete(int $id, Request $request): JsonResponse
     {
         return new JsonResponse([
             'message' => 'From ' . go(),

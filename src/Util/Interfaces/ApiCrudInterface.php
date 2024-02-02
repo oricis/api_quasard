@@ -11,7 +11,7 @@ interface ApiCrudInterface
 {
 
     public function create(Request $request): JsonResponse;
-    public function delete(int $id): JsonResponse;
+    public function delete(int $id, Request $request): JsonResponse;
     public function find(int $id): JsonResponse;
     public function update(Request $request): JsonResponse;
 }
