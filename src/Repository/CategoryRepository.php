@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Services\Categories\CreateCategoryService;
 use App\Util\Interfaces\BaseRepositoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 final class CategoryRepository extends BaseRepository implements BaseRepositoryInterface
 {
@@ -40,17 +42,23 @@ final class CategoryRepository extends BaseRepository implements BaseRepositoryI
         return $rows ? $rows : [];
     }
 
-    public function create():? object
+    public function create(Request $request): int
+    {
+        $data = [
+            'name' => $request->request->get('name'),
+            'description' => $request->request->get('description', null),
+            'active' => $request->request->get('active', 1),
+        ];
+
+        return (new CreateCategoryService($this->connection))->create($data);
+    }
+
+    public function update(Request $request): int
     {
         return null;
     }
 
-    public function update():? object
-    {
-        return null;
-    }
-
-    public function delete(int $id): bool
+    public function delete(int $id, Request $request): bool
     {
         return false;
     }

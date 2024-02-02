@@ -53,11 +53,17 @@ class CategoryController extends AbstractController implements ApiCrudInterface
     #[Route('/api/v1/categories/create', name: 'create_category')]
     public function create(Request $request): JsonResponse
     {
+        if ($request->getMethod() === 'POST') {
+            $result = $this->repository->create($request);
+            $message = ($result)
+                ? 'Category created!'
+                : 'Error creating category';
+        }
+
         return new JsonResponse([
-            'message' => 'From ' . go(),
+            'message' => $message ?? 404,
             'data' => [
-                'success' => false, // TODO:
-                'id' => 1,
+                'success' => (bool) ($result ?? false),
             ],
         ]);
     }

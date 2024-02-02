@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Repository\Traits\UserNotesTrait;
 
 use App\Util\Interfaces\BaseRepositoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 final class UserRepository extends BaseRepository implements BaseRepositoryInterface
 {
@@ -44,17 +45,17 @@ final class UserRepository extends BaseRepository implements BaseRepositoryInter
         return $rows ? $rows : [];
     }
 
-    public function create():? object
+    public function create(Request $request): int
     {
-        return null;
+        return 0;
     }
 
-    public function update():? object
+    public function update(Request $request): int
     {
-        return null;
+        return 0;
     }
 
-    public function delete(int $id): bool
+    public function delete(int $id, Request $request): bool
     {
         return false;
     }
