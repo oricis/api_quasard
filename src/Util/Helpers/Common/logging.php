@@ -19,6 +19,7 @@ if (!function_exists($funcName)) {
             $level = 'WARNING';
         }
         $message = $level . ': ' . $message;
+        $message = str_replace('<br>', PHP_EOL, $message);
         $dateTime = date('Y-m-d H:i:s');
         $today = date('d_m_Y');
         $path = dirname(__DIR__, 4) . '/var/log/' . $today . '.md';
