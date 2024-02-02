@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Categories;
 
-use App\Exceptions\CreateEntityException;
 use App\Service\Repository\BaseRepositoryService;
 use Doctrine\DBAL\Connection;
 
@@ -29,12 +28,9 @@ final class CreateCategoryService extends BaseRepositoryService
                 ->insert($this->table)
                 ->values($this->prepareQueryBuilderValues($data));
             $queryBuilder = $this->setQueryBuilderParameters($queryBuilder, $data);
+            $result = $queryBuilder->executeQuery();
 
-            $lastInsertIdBefore = $this->connection->lastInsertId(); // HACK:
-            $queryBuilder->executeQuery();
-
-            return (int) $lastInsertIdBefore < $this->connection->lastInsertId();
-
+            return $result->rowCount();
 
         } catch (\Exception $e) {
             error(getExceptionStr($e));
