@@ -72,11 +72,17 @@ class UserController extends AbstractController implements ApiCrudInterface
     #[Route('/api/v1/users/create', name: 'create_user')]
     public function create(Request $request): JsonResponse
     {
+        if ($request->getMethod() === 'POST') {
+            $result = $this->repository->create($request);
+            $message = ($result)
+                ? 'User created!'
+                : 'Error creating user';
+        }
+
         return new JsonResponse([
-            'message' => 'From ' . go(),
+            'message' => $message ?? 404,
             'data' => [
-                'success' => false, // TODO:
-                'id' => 1,
+                'success' => (bool) ($result ?? false),
             ],
         ]);
     }
@@ -84,11 +90,17 @@ class UserController extends AbstractController implements ApiCrudInterface
     #[Route('/api/v1/users/update', name: 'update_user')]
     public function update(Request $request): JsonResponse
     {
+        if ($request->getMethod() === 'PUT') {
+            $result = $this->repository->update($request);
+            $message = ($result)
+                ? 'User updated!'
+                : 'Error updating user';
+        }
+
         return new JsonResponse([
-            'message' => 'From ' . go(),
+            'message' => $message ?? 404,
             'data' => [
-                'success' => false, // TODO:
-                'id' => 1,
+                'success' => (bool) ($result ?? false),
             ],
         ]);
     }
@@ -96,10 +108,17 @@ class UserController extends AbstractController implements ApiCrudInterface
     #[Route('/api/v1/users/delete/{id}', name: 'delete_user', requirements: ['id' => '\d+'])]
     public function delete(int $id, Request $request): JsonResponse
     {
+        if ($request->getMethod() === 'DELETE') {
+            $result = $this->repository->delete($id);
+            $message = ($result)
+                ? 'User deleted!'
+                : 'Error deleting user';
+        }
+
         return new JsonResponse([
-            'message' => 'From ' . go(),
+            'message' => $message ?? 404,
             'data' => [
-                'success' => false, // TODO:
+                'success' => (bool) ($result ?? false),
             ],
         ]);
     }
