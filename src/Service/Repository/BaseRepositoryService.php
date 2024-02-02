@@ -19,6 +19,18 @@ class BaseRepositoryService
         return $output;
     }
 
+    protected function prepareUpdateQueryBuilderValues(
+        QueryBuilder $queryBuilder,
+        array $data
+    ): QueryBuilder
+    {
+        foreach ($data as $key => $value) {
+            $queryBuilder = $queryBuilder->set($key, '?');
+        }
+
+        return $queryBuilder;
+    }
+
     protected function setQueryBuilderParameters(
         QueryBuilder $queryBuilder,
         array $data
@@ -31,5 +43,15 @@ class BaseRepositoryService
         }
 
         return $queryBuilder;
+    }
+
+    protected function traceQueryBuilder(QueryBuilder $queryBuilder): void
+    {
+        $data = [
+            'params' => $queryBuilder->getParameters(),
+            'sql'    => $queryBuilder->getSQL(),
+        ];
+
+        dump($data);
     }
 }

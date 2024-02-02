@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Services\Categories\CreateCategoryService;
+use App\Exceptions\UpdateEntityException;
+use App\Service\Repository\Category\CreateCategoryService;
+use App\Service\Repository\Category\DeleteCategoryService;
+use App\Service\Repository\Category\UpdateCategoryService;
 use App\Util\Interfaces\BaseRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -55,11 +58,29 @@ final class CategoryRepository extends BaseRepository implements BaseRepositoryI
 
     public function update(Request $request): int
     {
-        return null;
+        try {
+            $id = $request->request->get('id');
+            if (is_null($id)) {
+                $message = 'Lost entity ID from update request';
+                throw new UpdateEntityException($message);
+            }
+        } catch (\Exception $e) {
+            error(getExceptionStr($e));
+            return 0;
+        }
+
+        $data = [
+            'id'   => (int) $id,
+            'name' => $request->request->get('name'),
+            'description' => $request->request->get('description', null),
+            'active' => $request->request->get('active', 1),
+        ];
+
+        return (new UpdateCategoryService($this->connection))->update($data);
     }
 
-    public function delete(int $id, Request $request): bool
+    public function delete(int $id): bool
     {
-        return false;
+        return (new DeleteCategoryService($this->connection))->delete($id);
     }
 }

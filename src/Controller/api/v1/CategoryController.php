@@ -71,22 +71,35 @@ class CategoryController extends AbstractController implements ApiCrudInterface
     #[Route('/api/v1/categories/update', name: 'update_category')]
     public function update(Request $request): JsonResponse
     {
+        if ($request->getMethod() === 'PUT') {
+            $result = $this->repository->update($request);
+            $message = ($result)
+                ? 'Category updated!'
+                : 'Error updating category';
+        }
+
         return new JsonResponse([
-            'message' => 'From ' . go(),
+            'message' => $message ?? 404,
             'data' => [
-                'success' => false, // TODO:
-                'id' => 1,
+                'success' => (bool) ($result ?? false),
             ],
         ]);
     }
 
     #[Route('/api/v1/categories/delete/{id}', name: 'delete_category', requirements: ['id' => '\d+'])]
-    public function delete(int $id): JsonResponse
+    public function delete(int $id, Request $request): JsonResponse
     {
+        if ($request->getMethod() === 'DELETE') {
+            $result = $this->repository->delete($id);
+            $message = ($result)
+                ? 'Category deleted!'
+                : 'Error deleting category';
+        }
+
         return new JsonResponse([
-            'message' => 'From ' . go(),
+            'message' => $message ?? 404,
             'data' => [
-                'success' => false, // TODO:
+                'success' => (bool) ($result ?? false),
             ],
         ]);
     }

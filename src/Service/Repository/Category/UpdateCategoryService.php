@@ -7,11 +7,10 @@ namespace App\Service\Repository\Category;
 use App\Service\Repository\BaseRepositoryService;
 use Doctrine\DBAL\Connection;
 
-final class CreateCategoryService extends BaseRepositoryService
+final class UpdateCategoryService extends BaseRepositoryService
 {
     private Connection $connection;
     private string $table = 'categories';
-
 
 
     public function __construct(Connection $connection)
@@ -19,12 +18,15 @@ final class CreateCategoryService extends BaseRepositoryService
         $this->connection = $connection;
     }
 
-    public function create(array $data): int
+    public function update(array $data): int
     {
         try {
             $queryBuilder = $this->connection->createQueryBuilder();
-            $queryBuilder->insert($this->table)
-                ->values($this->prepareQueryBuilderValues($data));
+            $queryBuilder->update($this->table)->where('id = ' . $data['id']);
+            unset($data['id']);
+
+            $queryBuilder
+                = $this->prepareUpdateQueryBuilderValues($queryBuilder, $data);
             $queryBuilder
                 = $this->setQueryBuilderParameters($queryBuilder, $data);
 
