@@ -72,8 +72,6 @@ The available API routes are:
     PUT    | [domain]/api/v1/users/update
 
     DELETE | [domain]/api/v1/notes/delete/[id]/user/[user_id]
-    GET    | [domain]/api/v1/notes
-    GET    | [domain]/api/v1/notes/find-categories/[id]
     GET    | [domain]/api/v1/notes/find/[id]
     POST   | [domain]/api/v1/notes/create
     PUT    | [domain]/api/v1/notes/remove-category
