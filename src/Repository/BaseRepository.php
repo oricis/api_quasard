@@ -23,6 +23,11 @@ class BaseRepository
         $this->attributes = implode(',', $attributes);
     }
 
+    public function getConnection(): Connection
+    {
+        return $this->connection;
+    }
+
 
     private function getConnectionParams(): array
     {
