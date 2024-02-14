@@ -11,13 +11,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AbstractController implements ApiCrudInterface
 {
-    // DELETE | [domain]/api/v1/categories/delete/[id]
-    // GET    | [domain]/api/v1/categories
-    // GET    | [domain]/api/v1/categories/find-notes/[id]
-    // GET    | [domain]/api/v1/categories/find/[id]
-    // POST   | [domain]/api/v1/categories/create
-    // PUT    | [domain]/api/v1/categories/update
-
     private CategoryRepository $repository;
 
 
@@ -32,7 +25,12 @@ class CategoryController extends AbstractController implements ApiCrudInterface
         $this->repository = $repository;
     }
 
-    #[Route('/api/v1/categories/find/{id}', name: 'find_category', requirements: ['id' => '\d+'])]
+    #[Route(
+        '/api/v1/categories/{id}',
+        methods: ['GET'],
+        name: 'find_category',
+        requirements: ['id' => '\d+']
+    )]
     public function find(int $id): JsonResponse
     {
         return new JsonResponse([
@@ -41,7 +39,11 @@ class CategoryController extends AbstractController implements ApiCrudInterface
         ]);
     }
 
-    #[Route('/api/v1/categories', name: 'all_categories')]
+    #[Route(
+        '/api/v1/categories',
+        methods: ['GET'],
+        name: 'all_categories'
+    )]
     public function findAll(): JsonResponse
     {
         return new JsonResponse([
@@ -50,15 +52,18 @@ class CategoryController extends AbstractController implements ApiCrudInterface
         ]);
     }
 
-    #[Route('/api/v1/categories/create', name: 'create_category')]
+    #[Route(
+        '/api/v1/categories',
+        methods: ['POST'],
+        name: 'create_category'
+    )]
     public function create(Request $request): JsonResponse
     {
-        if ($request->getMethod() === 'POST') {
-            $result = $this->repository->create($request);
-            $message = ($result)
-                ? 'Category created!'
-                : 'Error creating category';
-        }
+        dd(go(), $request->getMethod());
+        $result = $this->repository->create($request);
+        $message = ($result)
+            ? 'Category created!'
+            : 'Error creating category';
 
         return new JsonResponse([
             'message' => $message ?? 404,
@@ -68,15 +73,18 @@ class CategoryController extends AbstractController implements ApiCrudInterface
         ]);
     }
 
-    #[Route('/api/v1/categories/update', name: 'update_category')]
+    #[Route(
+        '/api/v1/categories',
+        methods: ['PUT'],
+        name: 'update_category'
+    )]
     public function update(Request $request): JsonResponse
     {
-        if ($request->getMethod() === 'PUT') {
-            $result = $this->repository->update($request);
-            $message = ($result)
-                ? 'Category updated!'
-                : 'Error updating category';
-        }
+        dd(go(), $request->getMethod());
+        $result = $this->repository->update($request);
+        $message = ($result)
+            ? 'Category updated!'
+            : 'Error updating category';
 
         return new JsonResponse([
             'message' => $message ?? 404,
@@ -86,7 +94,12 @@ class CategoryController extends AbstractController implements ApiCrudInterface
         ]);
     }
 
-    #[Route('/api/v1/categories/delete/{id}', name: 'delete_category', requirements: ['id' => '\d+'])]
+    #[Route(
+        '/api/v1/categories/{id}',
+        methods: ['DELETE'],
+        name: 'delete_category',
+        requirements: ['id' => '\d+']
+    )]
     public function delete(int $id, Request $request): JsonResponse
     {
         if ($request->getMethod() === 'DELETE') {
