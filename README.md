@@ -63,29 +63,28 @@ Use the files from "database/sql" to create the BD tables in this order:
 
 The available API routes are:
 
-    DELETE | [domain]/api/v1/users/delete/[id]
+    DELETE | [domain]/api/v1/users/[id]
     GET    | [domain]/api/v1/users
-    GET    | [domain]/api/v1/users/find-notes/[id]
-    GET    | [domain]/api/v1/users/find-notes/[id]/old
-    GET    | [domain]/api/v1/users/find/[id]
-    POST   | [domain]/api/v1/users/create
-    PUT    | [domain]/api/v1/users/update
+    GET    | [domain]/api/v1/users/[id]/notes
+    GET    | [domain]/api/v1/users/[id]/old-notes
+    GET    | [domain]/api/v1/users/[id]
+    POST   | [domain]/api/v1/users
+    PUT    | [domain]/api/v1/users
 
-    DELETE | [domain]/api/v1/notes/delete/[id]/user/[user_id]
-    GET    | [domain]/api/v1/notes/find/[id]
-    POST   | [domain]/api/v1/notes/create
+    DELETE | [domain]/api/v1/notes/[id]/user/[user_id]
+    GET    | [domain]/api/v1/notes/[id]
+    POST   | [domain]/api/v1/notes
     PUT    | [domain]/api/v1/notes/remove-category
     PUT    | [domain]/api/v1/notes/set-category
-    PUT    | [domain]/api/v1/notes/update
+    PUT    | [domain]/api/v1/notes
 
-    DELETE | [domain]/api/v1/categories/delete/[id]
+    DELETE | [domain]/api/v1/categories/[id]
     GET    | [domain]/api/v1/categories
-    GET    | [domain]/api/v1/categories/find-notes/[id]
-    GET    | [domain]/api/v1/categories/find/[id]
-    POST   | [domain]/api/v1/categories/create
-    PUT    | [domain]/api/v1/categories/update
+    GET    | [domain]/api/v1/categories/[id]
+    POST   | [domain]/api/v1/categories
+    PUT    | [domain]/api/v1/categories
 
-***NOTE:** routes added in the controllers as*
+***NOTE:** routes on the controllers as*
 *[attributes](https://symfony.com/doc/current/best_practices.html#best-practice-controller-attributes).*
 
 ***
