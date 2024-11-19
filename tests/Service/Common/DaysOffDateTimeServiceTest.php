@@ -6,7 +6,6 @@ namespace Service\Common;
 
 use App\Repository\Data\Data;
 use App\Service\Common\DaysOffDateTimeService;
-use Common\LalalaTrait;
 use PHPUnit\Framework\TestCase;
 
 class DaysOffDateTimeServiceTest extends TestCase

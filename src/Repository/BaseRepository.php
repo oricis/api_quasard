@@ -12,12 +12,18 @@ class BaseRepository
     protected Connection $connection;
     protected string $attributes = '*';
 
-    public function __construct()
+    public function __construct(string $dbName = '')
     {
-        $this->connection
-            = DriverManager::getConnection($this->getConnectionParams());
+        $connectionParams = $this->getConnectionParams($dbName);
+        if (is_array($connectionParams)
+            && !empty($connectionParams)) {
+            $this->connection = DriverManager::getConnection($connectionParams);
+        }
     }
 
+    /**
+     * @param array<int,string> $attributes
+     */
     public function setAttributes(array $attributes): void
     {
         $this->attributes = implode(',', $attributes);
@@ -29,10 +35,13 @@ class BaseRepository
     }
 
 
-    private function getConnectionParams(): array
+    /**
+     * @return array<mixed>
+     */
+    private function getConnectionParams(string $dbName = ''): array
     {
         return [
-            'dbname' => $_ENV['DB_NAME'],
+            'dbname' => ($dbName) ? $dbName : $_ENV['DB_NAME'],
             'driver' => $_ENV['DB_DRIVER'],
             'host'   => $_ENV['DB_HOST'],
             'password' => $_ENV['DB_PASSWORD'],

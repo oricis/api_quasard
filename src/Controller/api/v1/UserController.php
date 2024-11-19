@@ -42,8 +42,7 @@ class UserController extends AbstractController implements ApiCrudInterface
     #[Route(
         '/api/v1/users',
         methods: ['GET'],
-        name: 'find_user',
-        requirements: ['id' => '\d+']
+        name: 'all_users'
     )]
     public function findAll(): JsonResponse
     {
